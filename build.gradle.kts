@@ -22,6 +22,12 @@ javafx {
     modules = listOf("javafx.controls", "javafx.graphics")
 }
 
+sourceSets {
+    named("main") {
+        resources.srcDir("assets")
+    }
+}
+
 application {
     mainModule.set("com.moni.app")
     mainClass.set("com.moni.app.MoniApplication")
