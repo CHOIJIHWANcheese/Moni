@@ -4,21 +4,22 @@ import java.util.Objects;
 
 import javafx.scene.image.ImageView;
 
-/** Plays the looping idle frames declared in {@code moni_sprites.json}. */
-public final class IdleSpriteAnimator implements SpriteAnimator {
+/** Plays the grab start frame once, then loops its hold frames. */
+public final class GrabSpriteAnimator implements SpriteAnimator {
     private static final int FRAME_WIDTH = 128;
     private static final int FRAME_HEIGHT = 160;
-    private static final int[] FRAME_DURATIONS_MILLIS = {360, 360, 240, 360};
+    private static final int HOLD_LOOP_FROM_FRAME = 1;
+    private static final int[] FRAME_DURATIONS_MILLIS = {120, 180, 180, 180};
 
     private final SpriteSheetAnimator animator;
 
-    public IdleSpriteAnimator(ImageView imageView) {
+    public GrabSpriteAnimator(ImageView imageView) {
         animator = new SpriteSheetAnimator(
                 Objects.requireNonNull(imageView, "imageView must not be null"),
                 FRAME_WIDTH,
                 FRAME_HEIGHT,
                 FRAME_DURATIONS_MILLIS,
-                0
+                HOLD_LOOP_FROM_FRAME
         );
     }
 
