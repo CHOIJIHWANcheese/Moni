@@ -6,6 +6,8 @@ import com.moni.app.animation.IdleSpriteAnimator;
 import com.moni.app.animation.GrabSpriteAnimator;
 import com.moni.app.animation.WalkSpriteAnimator;
 import com.moni.app.interaction.MoniDragController;
+import com.moni.app.foreground.ForegroundApplicationMonitor;
+import com.moni.app.foreground.ForegroundApplicationProviders;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.Group;
@@ -29,6 +31,7 @@ public final class MoniApplication extends Application {
     private static final double SCREEN_MARGIN = 24;
 
     private MoniDragController dragController;
+    private ForegroundApplicationMonitor foregroundMonitor;
 
     @Override
     public void start(Stage stage) {
@@ -58,14 +61,26 @@ public final class MoniApplication extends Application {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.setAlwaysOnTop(true);
-        stage.setOnHidden(event -> dragController.stop());
+        stage.setOnHidden(event -> stopServices());
         stage.show();
         dragController.start();
+        foregroundMonitor = new ForegroundApplicationMonitor(
+                ForegroundApplicationProviders.forCurrentPlatform(),
+                application -> System.out.println("[Moni] Active app: " + application.executableName())
+        );
+        foregroundMonitor.start();
         Platform.runLater(() -> positionInBottomRight(stage));
     }
 
     @Override
     public void stop() {
+        stopServices();
+    }
+
+    private void stopServices() {
+        if (foregroundMonitor != null) {
+            foregroundMonitor.close();
+        }
         if (dragController != null) {
             dragController.stop();
         }

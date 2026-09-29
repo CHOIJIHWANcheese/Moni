@@ -31,10 +31,12 @@ sourceSets {
 application {
     mainModule.set("com.moni.app")
     mainClass.set("com.moni.app.MoniApplication")
-    applicationDefaultJvmArgs = listOf("--enable-native-access=javafx.graphics")
+    applicationDefaultJvmArgs = listOf("--enable-native-access=javafx.graphics,com.sun.jna")
 }
 
 dependencies {
+    implementation("net.java.dev.jna:jna:5.19.1")
+    implementation("net.java.dev.jna:jna-platform:5.19.1")
     testImplementation(platform("org.junit:junit-bom:5.13.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
