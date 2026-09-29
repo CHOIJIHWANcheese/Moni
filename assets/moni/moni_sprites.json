@@ -1,0 +1,96 @@
+{
+  "$schema": "moni-sprites-v1",
+  "version": 1,
+  "character": "moni",
+  "atlas": "moni_all_sprites.png",
+  "frameSize": {
+    "width": 128,
+    "height": 160
+  },
+  "atlasSize": {
+    "width": 512,
+    "height": 960
+  },
+  "rendering": {
+    "interpolation": "nearest-neighbor",
+    "transparentBackground": true,
+    "coordinateOrigin": "top-left"
+  },
+  "dragInteraction": {
+    "animation": "grab",
+    "mouseAnchor": { "x": 64, "y": 30 },
+    "startFrame": 0,
+    "holdLoopFromFrame": 1,
+    "iconPolicy": "freeze-current-until-release",
+    "releaseAnimation": "idle"
+  },
+  "animations": {
+    "idle": {
+      "source": "moni_idle.png",
+      "loop": true,
+      "iconSlot": { "x": 50, "y": 90, "width": 28, "height": 22 },
+      "frames": [
+        { "x": 0, "y": 0, "width": 128, "height": 160, "durationMs": 360 },
+        { "x": 128, "y": 0, "width": 128, "height": 160, "durationMs": 360 },
+        { "x": 256, "y": 0, "width": 128, "height": 160, "durationMs": 240 },
+        { "x": 384, "y": 0, "width": 128, "height": 160, "durationMs": 360 }
+      ]
+    },
+    "walkLeft": {
+      "source": "moni_walk_left.png",
+      "loop": true,
+      "iconSlot": { "x": 29, "y": 94, "width": 19, "height": 22 },
+      "frames": [
+        { "x": 0, "y": 160, "width": 128, "height": 160, "durationMs": 120 },
+        { "x": 128, "y": 160, "width": 128, "height": 160, "durationMs": 120 },
+        { "x": 256, "y": 160, "width": 128, "height": 160, "durationMs": 120 },
+        { "x": 384, "y": 160, "width": 128, "height": 160, "durationMs": 120 }
+      ]
+    },
+    "walkRight": {
+      "source": "moni_walk_right.png",
+      "loop": true,
+      "iconSlot": { "x": 80, "y": 94, "width": 19, "height": 22 },
+      "frames": [
+        { "x": 0, "y": 320, "width": 128, "height": 160, "durationMs": 120 },
+        { "x": 128, "y": 320, "width": 128, "height": 160, "durationMs": 120 },
+        { "x": 256, "y": 320, "width": 128, "height": 160, "durationMs": 120 },
+        { "x": 384, "y": 320, "width": 128, "height": 160, "durationMs": 120 }
+      ]
+    },
+    "talk": {
+      "source": "moni_talk.png",
+      "loop": true,
+      "iconSlot": { "x": 50, "y": 90, "width": 28, "height": 22 },
+      "frames": [
+        { "x": 0, "y": 480, "width": 128, "height": 160, "durationMs": 140 },
+        { "x": 128, "y": 480, "width": 128, "height": 160, "durationMs": 110 },
+        { "x": 256, "y": 480, "width": 128, "height": 160, "durationMs": 140 },
+        { "x": 384, "y": 480, "width": 128, "height": 160, "durationMs": 110 }
+      ]
+    },
+    "sleep": {
+      "source": "moni_sleep.png",
+      "loop": true,
+      "iconSlot": { "x": 50, "y": 92, "width": 28, "height": 22 },
+      "frames": [
+        { "x": 0, "y": 640, "width": 128, "height": 160, "durationMs": 800 },
+        { "x": 128, "y": 640, "width": 128, "height": 160, "durationMs": 800 },
+        { "x": 256, "y": 640, "width": 128, "height": 160, "durationMs": 800 },
+        { "x": 384, "y": 640, "width": 128, "height": 160, "durationMs": 800 }
+      ]
+    },
+    "grab": {
+      "source": "moni_grab.png",
+      "loop": true,
+      "loopFromFrame": 1,
+      "iconSlot": { "x": 50, "y": 87, "width": 28, "height": 22 },
+      "frames": [
+        { "x": 0, "y": 800, "width": 128, "height": 160, "durationMs": 120 },
+        { "x": 128, "y": 800, "width": 128, "height": 160, "durationMs": 180 },
+        { "x": 256, "y": 800, "width": 128, "height": 160, "durationMs": 180 },
+        { "x": 384, "y": 800, "width": 128, "height": 160, "durationMs": 180 }
+      ]
+    }
+  }
+}
