@@ -2,6 +2,7 @@ package com.moni.app;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import com.moni.app.animation.IdleSpriteAnimator;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.Group;
@@ -21,17 +22,21 @@ public final class MoniApplication extends Application {
     private static final double FRAME_HEIGHT = 160;
     private static final double SCREEN_MARGIN = 24;
 
+    private IdleSpriteAnimator idleAnimator;
+
     @Override
     public void start(Stage stage) {
         var imageView = new ImageView(loadIdleSprite());
-        imageView.setViewport(new Rectangle2D(0, 0, FRAME_WIDTH, FRAME_HEIGHT));
         imageView.setSmooth(false);
+        idleAnimator = new IdleSpriteAnimator(imageView);
 
         var scene = new Scene(new Group(imageView), FRAME_WIDTH, FRAME_HEIGHT, Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.setAlwaysOnTop(true);
+        stage.setOnHidden(event -> idleAnimator.stop());
         stage.show();
+        idleAnimator.start();
         Platform.runLater(() -> positionInBottomRight(stage));
     }
 
