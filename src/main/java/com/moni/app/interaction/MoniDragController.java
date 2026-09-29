@@ -2,8 +2,10 @@ package com.moni.app.interaction;
 
 import java.util.Objects;
 import java.util.Random;
+import java.time.Duration;
 
 import com.moni.app.animation.SpriteAnimator;
+import com.moni.app.sleep.SleepController;
 import com.moni.app.walking.RandomIntSource;
 import com.moni.app.walking.WalkController;
 import com.moni.app.walking.WalkDirection;
@@ -26,11 +28,14 @@ public final class MoniDragController {
     private final Image grabImage;
     private final Image walkLeftImage;
     private final Image walkRightImage;
+    private final Image sleepImage;
     private final SpriteAnimator idleAnimator;
     private final SpriteAnimator grabAnimator;
     private final SpriteAnimator walkAnimator;
+    private final SpriteAnimator sleepAnimator;
     private final MoniStateMachine stateMachine = new MoniStateMachine();
     private final WalkController walkController;
+    private final SleepController sleepController;
 
     public MoniDragController(
             Stage stage,
@@ -39,9 +44,12 @@ public final class MoniDragController {
             Image grabImage,
             Image walkLeftImage,
             Image walkRightImage,
+            Image sleepImage,
             SpriteAnimator idleAnimator,
             SpriteAnimator grabAnimator,
-            SpriteAnimator walkAnimator
+            SpriteAnimator walkAnimator,
+            SpriteAnimator sleepAnimator,
+            Duration sleepAfter
     ) {
         this.stage = Objects.requireNonNull(stage, "stage must not be null");
         this.imageView = Objects.requireNonNull(imageView, "imageView must not be null");
@@ -49,16 +57,20 @@ public final class MoniDragController {
         this.grabImage = Objects.requireNonNull(grabImage, "grabImage must not be null");
         this.walkLeftImage = Objects.requireNonNull(walkLeftImage, "walkLeftImage must not be null");
         this.walkRightImage = Objects.requireNonNull(walkRightImage, "walkRightImage must not be null");
+        this.sleepImage = Objects.requireNonNull(sleepImage, "sleepImage must not be null");
         this.idleAnimator = Objects.requireNonNull(idleAnimator, "idleAnimator must not be null");
         this.grabAnimator = Objects.requireNonNull(grabAnimator, "grabAnimator must not be null");
         this.walkAnimator = Objects.requireNonNull(walkAnimator, "walkAnimator must not be null");
+        this.sleepAnimator = Objects.requireNonNull(sleepAnimator, "sleepAnimator must not be null");
         RandomIntSource random = new Random()::nextInt;
         walkController = new WalkController(stage, random, this::beginWalking, this::finishWalking);
+        sleepController = new SleepController(Objects.requireNonNull(sleepAfter, "sleepAfter must not be null"), this::beginSleeping);
     }
 
     public void start() {
         showIdle();
         walkController.scheduleNextWalk();
+        sleepController.start();
     }
 
     public void install(Scene scene) {
@@ -69,6 +81,7 @@ public final class MoniDragController {
 
     public void stop() {
         walkController.stop();
+        sleepController.stop();
         stopAllAnimations();
         stateMachine.resetToIdle();
     }
@@ -87,6 +100,7 @@ public final class MoniDragController {
             return;
         }
 
+        sleepController.recordPrimaryInteraction();
         walkController.stop();
         stopAllAnimations();
         imageView.setImage(grabImage);
@@ -111,6 +125,7 @@ public final class MoniDragController {
 
         showIdle();
         walkController.scheduleNextWalk();
+        sleepController.restartAfterInteraction();
         event.consume();
     }
 
@@ -141,6 +156,16 @@ public final class MoniDragController {
         }
     }
 
+    private void beginSleeping() {
+        if (!stateMachine.beginSleeping()) {
+            return;
+        }
+        walkController.stop();
+        stopAllAnimations();
+        imageView.setImage(sleepImage);
+        sleepAnimator.start();
+    }
+
     private void showIdle() {
         stopAllAnimations();
         imageView.setImage(idleImage);
@@ -151,6 +176,7 @@ public final class MoniDragController {
         idleAnimator.stop();
         grabAnimator.stop();
         walkAnimator.stop();
+        sleepAnimator.stop();
     }
 
     record StagePosition(double x, double y) {

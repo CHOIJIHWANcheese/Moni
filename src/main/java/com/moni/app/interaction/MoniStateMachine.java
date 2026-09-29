@@ -8,7 +8,8 @@ final class MoniStateMachine {
         IDLE,
         GRABBING,
         WALKING_LEFT,
-        WALKING_RIGHT
+        WALKING_RIGHT,
+        SLEEPING
     }
 
     private State state = State.IDLE;
@@ -30,6 +31,14 @@ final class MoniStateMachine {
             return false;
         }
         state = State.GRABBING;
+        return true;
+    }
+
+    boolean beginSleeping() {
+        if (state != State.IDLE && state != State.WALKING_LEFT && state != State.WALKING_RIGHT) {
+            return false;
+        }
+        state = State.SLEEPING;
         return true;
     }
 

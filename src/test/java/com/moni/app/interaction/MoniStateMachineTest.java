@@ -28,4 +28,31 @@ class MoniStateMachineTest {
         assertTrue(stateMachine.releaseGrabToIdle());
         assertEquals(MoniStateMachine.State.IDLE, stateMachine.state());
     }
+
+    @Test
+    void idleTransitionsToSleeping() {
+        MoniStateMachine stateMachine = new MoniStateMachine();
+
+        assertTrue(stateMachine.beginSleeping());
+        assertEquals(MoniStateMachine.State.SLEEPING, stateMachine.state());
+    }
+
+    @Test
+    void walkingTransitionsToSleeping() {
+        MoniStateMachine stateMachine = new MoniStateMachine();
+
+        assertTrue(stateMachine.beginWalking(WalkDirection.RIGHT));
+        assertTrue(stateMachine.beginSleeping());
+        assertEquals(MoniStateMachine.State.SLEEPING, stateMachine.state());
+    }
+
+    @Test
+    void sleepingTransitionsThroughGrabbingToIdle() {
+        MoniStateMachine stateMachine = new MoniStateMachine();
+
+        stateMachine.beginSleeping();
+        assertTrue(stateMachine.beginGrabbing());
+        assertTrue(stateMachine.releaseGrabToIdle());
+        assertEquals(MoniStateMachine.State.IDLE, stateMachine.state());
+    }
 }
