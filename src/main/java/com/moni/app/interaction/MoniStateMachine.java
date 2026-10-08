@@ -9,7 +9,8 @@ final class MoniStateMachine {
         GRABBING,
         WALKING_LEFT,
         WALKING_RIGHT,
-        SLEEPING
+        SLEEPING,
+        TALKING
     }
 
     private State state = State.IDLE;
@@ -42,6 +43,15 @@ final class MoniStateMachine {
         return true;
     }
 
+    boolean beginTalking() {
+        // Dragging has priority: a new message must not interrupt an active grab.
+        if (state == State.GRABBING) {
+            return false;
+        }
+        state = State.TALKING;
+        return true;
+    }
+
     boolean releaseGrabToIdle() {
         if (state != State.GRABBING) {
             return false;
@@ -52,6 +62,14 @@ final class MoniStateMachine {
 
     boolean finishWalkingToIdle() {
         if (state != State.WALKING_LEFT && state != State.WALKING_RIGHT) {
+            return false;
+        }
+        state = State.IDLE;
+        return true;
+    }
+
+    boolean finishTalkingToIdle() {
+        if (state != State.TALKING) {
             return false;
         }
         state = State.IDLE;

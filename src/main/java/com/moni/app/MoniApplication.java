@@ -6,7 +6,9 @@ import com.moni.app.animation.IdleSpriteAnimator;
 import com.moni.app.animation.GrabSpriteAnimator;
 import com.moni.app.animation.WalkSpriteAnimator;
 import com.moni.app.animation.SleepSpriteAnimator;
+import com.moni.app.animation.TalkSpriteAnimator;
 import com.moni.app.interaction.MoniDragController;
+import com.moni.app.speech.SpeechBubbleController;
 import com.moni.app.sleep.SleepConfiguration;
 import com.moni.app.foreground.ForegroundApplicationMonitor;
 import com.moni.app.foreground.ForegroundApplicationProviders;
@@ -29,6 +31,7 @@ public final class MoniApplication extends Application {
     private static final String WALK_LEFT_SPRITE_RESOURCE = "/moni/moni_walk_left.png";
     private static final String WALK_RIGHT_SPRITE_RESOURCE = "/moni/moni_walk_right.png";
     private static final String SLEEP_SPRITE_RESOURCE = "/moni/moni_sleep.png";
+    private static final String TALK_SPRITE_RESOURCE = "/moni/moni_talk.png";
     private static final double FRAME_WIDTH = 128;
     private static final double FRAME_HEIGHT = 160;
     private static final double SCREEN_MARGIN = 24;
@@ -43,12 +46,15 @@ public final class MoniApplication extends Application {
         Image walkLeftImage = loadSprite(WALK_LEFT_SPRITE_RESOURCE);
         Image walkRightImage = loadSprite(WALK_RIGHT_SPRITE_RESOURCE);
         Image sleepImage = loadSprite(SLEEP_SPRITE_RESOURCE);
+        Image talkImage = loadSprite(TALK_SPRITE_RESOURCE);
         var imageView = new ImageView(idleImage);
         imageView.setSmooth(false);
         var idleAnimator = new IdleSpriteAnimator(imageView);
         var grabAnimator = new GrabSpriteAnimator(imageView);
         var walkAnimator = new WalkSpriteAnimator(imageView);
         var sleepAnimator = new SleepSpriteAnimator(imageView);
+        var talkAnimator = new TalkSpriteAnimator(imageView);
+        var speechBubbleController = new SpeechBubbleController(stage);
 
         var scene = new Scene(new Group(imageView), FRAME_WIDTH, FRAME_HEIGHT, Color.TRANSPARENT);
         dragController = new MoniDragController(
@@ -59,10 +65,13 @@ public final class MoniApplication extends Application {
                 walkLeftImage,
                 walkRightImage,
                 sleepImage,
+                talkImage,
                 idleAnimator,
                 grabAnimator,
                 walkAnimator,
                 sleepAnimator,
+                talkAnimator,
+                speechBubbleController,
                 SleepConfiguration.fromArguments(getParameters().getRaw())
         );
         dragController.install(scene);
@@ -72,6 +81,7 @@ public final class MoniApplication extends Application {
         stage.setOnHidden(event -> stopServices());
         stage.show();
         dragController.start();
+        dragController.showMessageAfter("안녕! 오늘도 같이 해보자.", java.time.Duration.ofSeconds(4), java.time.Duration.ofSeconds(1));
         foregroundMonitor = new ForegroundApplicationMonitor(
                 ForegroundApplicationProviders.forCurrentPlatform(),
                 application -> System.out.println("[Moni] Active app: " + application.executableName())

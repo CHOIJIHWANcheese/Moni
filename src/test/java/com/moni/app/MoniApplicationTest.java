@@ -19,4 +19,12 @@ class MoniApplicationTest {
                 "The idle sprite must be packaged as the /moni/moni_idle.png classpath resource."
         );
     }
+
+    @Test
+    void speechBubbleBackgroundIsAvailableOnTheClasspath() {
+        assertNotNull(
+                MoniApplication.class.getResource("/ui/moni_speech_bubble.png"),
+                "The speech bubble background must be packaged as the /ui/moni_speech_bubble.png classpath resource."
+        );
+    }
 }
