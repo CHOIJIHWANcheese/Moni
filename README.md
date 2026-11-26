@@ -40,3 +40,7 @@ JavaFX로 만든 데스크톱 펫 프로그램.
 ## Transparent Window
 배경 없는 투명 창에 Moni를 띄운다.
 
+
+## Idle Animation
+대기 상태에서 스프라이트 애니메이션을 재생한다.
+
