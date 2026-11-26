@@ -32,3 +32,7 @@ JavaFX로 만든 데스크톱 펫 프로그램.
 ## How to Run
 (실행 방법 작성)
 
+
+## Project Structure
+(폴더/파일 구조 작성)
+
