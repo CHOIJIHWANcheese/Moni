@@ -52,3 +52,7 @@ JavaFX로 만든 데스크톱 펫 프로그램.
 ## Walking
 Moni가 화면 위를 스스로 걸어다닌다.
 
+
+## Active App Detection
+현재 활성화된 Windows 앱을 감지한다.
+
