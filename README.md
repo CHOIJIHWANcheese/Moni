@@ -36,3 +36,7 @@ JavaFX로 만든 데스크톱 펫 프로그램.
 ## Project Structure
 (폴더/파일 구조 작성)
 
+
+## Transparent Window
+배경 없는 투명 창에 Moni를 띄운다.
+
