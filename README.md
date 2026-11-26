@@ -56,3 +56,7 @@ Moni가 화면 위를 스스로 걸어다닌다.
 ## Active App Detection
 현재 활성화된 Windows 앱을 감지한다.
 
+
+## Sleep
+일정 조건에서 자동으로 잠든다.
+
