@@ -19,3 +19,7 @@ Moni is a JavaFX desktop application targeting JDK 25 LTS and JavaFX 25.
 ```
 
 The initial window displays `Moni Project` only.
+
+## Moni
+JavaFX로 만든 데스크톱 펫 프로그램.
+
