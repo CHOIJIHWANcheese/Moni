@@ -28,3 +28,7 @@ JavaFX로 만든 데스크톱 펫 프로그램.
 - JDK
 - JavaFX
 
+
+## How to Run
+(실행 방법 작성)
+
