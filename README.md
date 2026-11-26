@@ -23,3 +23,8 @@ The initial window displays `Moni Project` only.
 ## Moni
 JavaFX로 만든 데스크톱 펫 프로그램.
 
+
+## Requirements
+- JDK
+- JavaFX
+
